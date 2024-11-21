@@ -210,7 +210,7 @@ st.markdown(
 )
 
 ### 4. Display Bar Chart using Altair
-st.subheader('4. Display Bar chart')
+st.subheader('3.Grafica cantidad de Nucletidos')
 p = alt.Chart(df).mark_bar().encode(
     x='nucleotido',
     y='cantidad'
@@ -222,7 +222,7 @@ p = p.properties(
 st.write(p)
 
 ### 5. Display Pie Chart using Altair
-st.subheader('5. Display Pie Chart')
+st.subheader('4.')
 
 import altair as alt
 
