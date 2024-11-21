@@ -169,16 +169,16 @@ st.header('Composiciòn de los nucleotidos del ADN')
 
 # 1. Print dictionary
 col1, col2 = st.columns(2)
-    def DNA_nucleotide_count(seq):
-        d = dict([
-            ('A', seq.count('A')),
-            ('T', seq.count('T')),
-            ('G', seq.count('G')),
-            ('C', seq.count('C'))
-        ])
-        return d
+def DNA_nucleotide_count(seq):
+    d = dict([
+        ('A', seq.count('A')),
+        ('T', seq.count('T')),
+        ('G', seq.count('G')),
+        ('C', seq.count('C'))
+    ])
+    return d
 
-    X = DNA_nucleotide_count(sequence)
+X = DNA_nucleotide_count(sequence)
 
 with col1:
     # 2. Print text
