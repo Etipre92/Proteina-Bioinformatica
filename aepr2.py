@@ -222,7 +222,7 @@ p = p.properties(
 st.write(p)
 
 ### 5. Display Pie Chart using Altair
-st.subheader('4.')
+st.subheader('4.Grafica de convergencia')
 
 import altair as alt
 
