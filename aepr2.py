@@ -7,7 +7,7 @@ import pandas as pd
 import altair as alt
 import matplotlib.pyplot as plt
 import numpy as np
-
+        
 st.sidebar.title('Visualizador de estructuras proteicas en base a una cadena de aminoacidos "SNMFold"')
 st.sidebar.write(' El [*ESMFold*](https://esmatlas.com/about) es un software que predice la estructura de una proteína utilizando una cadena de aminoácidos, y esta basado en el modelo de lenguaje ESM-2. Esto con el objetivo de visualizar como sería la estructura esperada de una proteína cualquiera, incluso una inventada. ')
 
@@ -63,7 +63,6 @@ def update(sequence=txt):
             st.write('Victor Beltran Valenzuela')
             st.write('Juan Ruiz Valenzuela')
 
-            st.subheader('2. Print dictionary')
             def DNA_nucleotide_count(seq):
                 d = dict([
                     ('A', seq.count('A')),
@@ -90,7 +89,6 @@ def update(sequence=txt):
                 return d
 
             X = DNA_nucleotide_count(sequence)
-            st.write(X)
 
             st.subheader('3. Display DataFrame')
             df = pd.DataFrame.from_dict(X, orient='index')
@@ -109,15 +107,6 @@ def update(sequence=txt):
                 height=alt.Step(120)  # controls width of bar.
             )
             st.write(p)
-            
-            for k, v in X.items():
-                X[k] = float(v)
-            
-            fig1, ax1 = plt.subplots()
-            ax1.pie(X.values() , labels=X.keys(), autopct='%1.1f%%', radius=10)
-            ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-
-            st.pyplot(fig1)
 
         except ValueError as e:
             st.error(f"Error al cargar la estructura de la proteina: {e}")
@@ -155,3 +144,138 @@ st.sidebar.dataframe(inventory)
 
 if not predict:
     st.warning('👈 Escribe la secuencia de aminoacidos para visualizar la proteina!')
+
+st.header('Enter DNA sequence')
+
+sequence_input = ">DNA Query 2\nGAACACGTGGAGGCAAACAGGAAGGTGAAGAAGAACTTATCCTATCAGGACGGAAGGTCCTGTGCTCGGG\nATCTTCCAGACGTCGCGACTCTAAATTGCCCCCTCTGAGGTCAAGGAACACAAGATGGTTTTGGAAATGC\nTGAACCCGATACATTATAACATCACCAGCATCGTGCCTGAAGCCATGCCTGCTGCCACCATGCCAGTCCT"
+
+#sequence = st.sidebar.text_area("Sequence input", sequence_input, height=250)
+sequence = st.text_area("Sequence input", sequence_input, height=250)
+sequence = sequence.splitlines()
+sequence = sequence[1:] # Skips the sequence name (first line)
+sequence = ''.join(sequence) # Concatenates list to string
+
+st.write("""
+***
+""")
+
+## Prints the input DNA sequence
+st.header('INPUT (DNA Query)')
+sequence
+
+## DNA nucleotide count
+st.header('OUTPUT (DNA nucleotide composition)')
+
+
+# 1. Print dictionary
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.subheader('1. Print dictionary')
+    def DNA_nucleotide_count(seq):
+        d = dict([
+            ('A', seq.count('A')),
+            ('T', seq.count('T')),
+            ('G', seq.count('G')),
+            ('C', seq.count('C'))
+        ])
+        return d
+
+    X = DNA_nucleotide_count(sequence)
+    st.write(X)
+
+with col2:
+    # 2. Print text
+    st.subheader('2. Print text')
+    st.write('There are ' + str(X['A']) + ' adenine (A)')
+    st.write('There are ' + str(X['T']) + ' thymine (T)')
+    st.write('There are ' + str(X['G']) + ' guanine (G)')
+    st.write('There are ' + str(X['C']) + ' cytosine (C)')
+
+with col3:
+    # 3. Display DataFrame
+    st.subheader('3. Display DataFrame')
+    df = pd.DataFrame.from_dict(X, orient='index')
+    df = df.rename({0: 'count'}, axis='columns')
+    df.reset_index(inplace=True)
+    df = df.rename(columns={'index': 'nucleotide'})
+    st.write(df)
+
+# Add CSS styling for subheaders
+st.markdown(
+    """
+    <style>
+    .stHeader > .deco-btn-container > div {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+### 4. Display Bar Chart using Altair
+st.subheader('4. Display Bar chart')
+p = alt.Chart(df).mark_bar().encode(
+    x='nucleotide',
+    y='count'
+)
+
+p = p.properties(
+    width=alt.Step(80)  # controls width of bar.
+)
+st.write(p)
+
+### 5. Display Pie Chart using Altair
+st.subheader('5. Display Pie Chart')
+
+import altair as alt
+
+# Reshape the data for animated pie chart
+df_pivot = df.melt('nucleotide', var_name='metric', value_name='value')
+
+# Create animated pie chart
+animated_pie_chart = alt.Chart(df_pivot).mark_arc().encode(
+    alt.X('value:Q', stack='zero'),
+    color='nucleotide:N',
+    tooltip=['nucleotide', 'metric', 'value']
+).properties(
+    width=500,
+    height=400
+).transform_joinaggregate(
+    total='sum(value)',
+    groupby=['nucleotide']
+).transform_calculate(
+    percentage='datum.value / datum.total'
+).encode(
+    text=alt.Text('percentage:Q', format='.1%')
+).configure_mark(
+    opacity=0.8
+)
+
+# Adjust properties of the animated pie chart
+animated_pie_chart = animated_pie_chart.properties(
+    width=300,
+    height=300
+)
+
+# Display the animated pie chart
+st.altair_chart(animated_pie_chart, use_container_width=True)
+
+p = alt.Chart(df).mark_bar().encode(
+    x='nucleotide',
+    y='count',
+    column='nucleotide'
+)
+
+p = p.properties(
+    width=alt.Step(80),  # controls width of bar
+    height=alt.Step(40),  # controls height of bar
+    column=alt.Column(
+        spacing=10  # controls spacing between grouped bars
+    )
+)
+
+st.header('Contact Information')
+st.markdown('**Name:** Dipraj Howlader')
+st.markdown('- **Email:** dip07.raz@gmail.com')
+st.markdown('- **Phone:** +8801710023365')
