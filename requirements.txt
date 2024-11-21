@@ -6,5 +6,5 @@ ipywidgets
 ipython_genutils
 pandas
 altair
-matplotlib.pyplot
+matplotlib
 numpy
