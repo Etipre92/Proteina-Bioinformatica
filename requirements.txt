@@ -4,3 +4,7 @@ py3Dmol
 biotite
 ipywidgets
 ipython_genutils
+pandas
+altair
+matplotlib.pyplot
+numpy
