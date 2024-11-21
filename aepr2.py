@@ -143,9 +143,9 @@ st.sidebar.write('Aminoacidos utilizados en la creación de proteinas:')
 st.sidebar.dataframe(inventory)
 
 if not predict:
-    st.warning('👈 Escribe la secuencia de aminoacidos para visualizar la proteina!')
+    st.warning('👈 Escribe una secuencia de aminoacidos y oprime visualizar para visualizar tu propia proteina!')
 
-st.header('Enter DNA sequence')
+st.header('Ingrese su secuencia de ADN')
 
 sequence_input = ">DNA Query 2\nGAACACGTGGAGGCAAACAGGAAGGTGAAGAAGAACTTATCCTATCAGGACGGAAGGTCCTGTGCTCGGG\nATCTTCCAGACGTCGCGACTCTAAATTGCCCCCTCTGAGGTCAAGGAACACAAGATGGTTTTGGAAATGC\nTGAACCCGATACATTATAACATCACCAGCATCGTGCCTGAAGCCATGCCTGCTGCCACCATGCCAGTCCT"
 
@@ -160,17 +160,15 @@ st.write("""
 """)
 
 ## Prints the input DNA sequence
-st.header('INPUT (DNA Query)')
+st.header('Secuencia de ADN')
 sequence
 
 ## DNA nucleotide count
-st.header('OUTPUT (DNA nucleotide composition)')
+st.header('Composiciòn de los nucleotidos del ADN')
 
 
 # 1. Print dictionary
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.subheader('1. Print dictionary')
+col1, col2 = st.columns(2)
     def DNA_nucleotide_count(seq):
         d = dict([
             ('A', seq.count('A')),
@@ -181,23 +179,21 @@ with col1:
         return d
 
     X = DNA_nucleotide_count(sequence)
-    st.write(X)
 
-with col2:
+with col1:
     # 2. Print text
-    st.subheader('2. Print text')
-    st.write('There are ' + str(X['A']) + ' adenine (A)')
-    st.write('There are ' + str(X['T']) + ' thymine (T)')
-    st.write('There are ' + str(X['G']) + ' guanine (G)')
-    st.write('There are ' + str(X['C']) + ' cytosine (C)')
-
-with col3:
+    st.subheader('1. Descripciòn de nucleotidos ')
+    st.write('Existen ' + str(X['A']) + ' de adenina (A) en la secuencia de ADN')
+    st.write('Existen ' + str(X['T']) + ' de timina (T) en la secuencia de ADN')
+    st.write('Existen ' + str(X['G']) + ' de guanina (G) en la secuencia de ADN')
+    st.write('Existen ' + str(X['C']) + ' de citocina (C) en la secuencia de ADN')
+with col2:
     # 3. Display DataFrame
-    st.subheader('3. Display DataFrame')
+    st.subheader('2. Tabla de nucleotidos')
     df = pd.DataFrame.from_dict(X, orient='index')
-    df = df.rename({0: 'count'}, axis='columns')
+    df = df.rename({0: 'cantidad'}, axis='columns')
     df.reset_index(inplace=True)
-    df = df.rename(columns={'index': 'nucleotide'})
+    df = df.rename(columns={'index': 'nucleotido'})
     st.write(df)
 
 # Add CSS styling for subheaders
