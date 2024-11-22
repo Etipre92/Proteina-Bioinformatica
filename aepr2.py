@@ -209,11 +209,13 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-### 4. Display Bar Chart using Altair
 st.subheader('3.Grafica cantidad de Nucletidos')
 p = alt.Chart(df).mark_bar().encode(
     x='nucleotido',
     y='cantidad'
+).configure_mark(
+    opacity=0.2,
+    color='red'
 )
 
 p = p.properties(
