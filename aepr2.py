@@ -147,10 +147,10 @@ if not predict:
 
 st.header('Ingrese su secuencia de ADN')
 
-sequence_input = ">Cadena de ADN aqui:\nGAACACGTGGAGGCAAACAGGAAGGTGAAGAAGAACTTATCCTATCAGGACGGAAGGTCCTGTGCTCGGG\nATCTTCCAGACGTCGCGACTCTAAATTGCCCCCTCTGAGGTCAAGGAACACAAGATGGTTTTGGAAATGC\nTGAACCCGATACATTATAACATCACCAGCATCGTGCCTGAAGCCATGCCTGCTGCCACCATGCCAGTCCT"
+sequence_input = "-Cadena de ADN aqui:\nGAACACGTGGAGGCAAACAGGAAGGTGAAGAAGAACTTATCCTATCAGGACGGAAGGTCCTGTGCTCGGG\nATCTTCCAGACGTCGCGACTCTAAATTGCCCCCTCTGAGGTCAAGGAACACAAGATGGTTTTGGAAATGC\nTGAACCCGATACATTATAACATCACCAGCATCGTGCCTGAAGCCATGCCTGCTGCCACCATGCCAGTCCT"
 
 #sequence = st.sidebar.text_area("Sequence input", sequence_input, height=250)
-sequence = st.text_area("Sequence input", sequence_input, height=250)
+sequence = st.text_area("Secuencia de entrada:", sequence_input, height=250)
 sequence = sequence.splitlines()
 sequence = sequence[1:] # Skips the sequence name (first line)
 sequence = ''.join(sequence) # Concatenates list to string
@@ -271,7 +271,7 @@ p = p.properties(
     )
 )
 
-st.header('Contact Information')
-st.markdown('**Name:** Dipraj Howlader')
-st.markdown('- **Email:** dip07.raz@gmail.com')
-st.markdown('- **Phone:** +8801710023365')
+st.header('Creadores')
+st.markdown('- **Etienne Preciado Tapia**')
+st.markdown('- **Victor Beltran Valenzuela**')
+st.markdown('- **Juan Ruiz Valenzuela**')
