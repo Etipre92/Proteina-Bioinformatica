@@ -214,8 +214,8 @@ p = alt.Chart(df).mark_bar().encode(
     x='nucleotido',
     y='cantidad'
 ).configure_mark(
-    opacity=0.2,
-    color='red'
+    opacity=0.8,
+    color='violet'
 )
 
 p = p.properties(
