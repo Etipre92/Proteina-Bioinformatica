@@ -58,11 +58,7 @@ def update(sequence=txt):
                 file_name='proteina_creada.pdb',
                 mime='text/plain',
             )
-            st.write('Programa realizado por los alumnos:')
-            st.write('Etienne Preciado Tapia')
-            st.write('Victor Beltran Valenzuela')
-            st.write('Juan Ruiz Valenzuela')
-
+            
             def DNA_nucleotide_count(seq):
                 d = dict([
                     ('A', seq.count('A')),
@@ -110,6 +106,11 @@ def update(sequence=txt):
                 height=alt.Step(180), width=700  # controls width of bar.
             )
             st.write(p)
+
+            st.write('Programa realizado por los alumnos:')
+            st.write('Etienne Preciado Tapia')
+            st.write('Victor Beltran Valenzuela')
+            st.write('Juan Ruiz Valenzuela')
 
         except ValueError as e:
             st.error(f"Error al cargar la estructura de la proteina: {e}")
