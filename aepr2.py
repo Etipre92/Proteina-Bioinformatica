@@ -101,6 +101,9 @@ def update(sequence=txt):
             p = alt.Chart(df).mark_bar().encode(
                 x='aminoacid',
                 y='count'
+            ).configure_mark(
+                opacity=0.8,
+                color='red'
             )
 
             p = p.properties(
@@ -219,7 +222,7 @@ p = alt.Chart(df).mark_bar().encode(
 )
 
 p = p.properties(
-    width=alt.Step(80)  # controls width of bar.
+    width=alt.Step(120)  # controls width of bar.
 )
 st.write(p)
 
