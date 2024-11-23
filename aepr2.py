@@ -160,8 +160,8 @@ st.write("""
 """)
 
 ## Prints the input DNA sequence
-st.header('Secuencia de ADN')
-sequence
+#st.header('Secuencia de ADN')
+#sequence
 
 ## DNA nucleotide count
 st.header('Composiciòn de los nucleotidos del ADN')
