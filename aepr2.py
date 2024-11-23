@@ -107,7 +107,7 @@ def update(sequence=txt):
             )
 
             p = p.properties(
-                height=alt.Step(180)  # controls width of bar.
+                height=alt.Step(180), width(200)  # controls width of bar.
             )
             st.write(p)
 
